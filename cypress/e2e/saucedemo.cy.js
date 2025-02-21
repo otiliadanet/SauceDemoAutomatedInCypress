@@ -3,6 +3,7 @@
 // npx cypress open
 
 describe('SauceDemo automation test', () => {
+
     beforeEach(() => {
       //cy.visit('https://www.saucedemo.com/'); 
       cy.visit("/"); //because I added the base URL in cypress.config.js
