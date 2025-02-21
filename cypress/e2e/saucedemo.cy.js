@@ -3,9 +3,13 @@
 // npx cypress open
 
 describe('SauceDemo automation test', () => {
-  beforeEach(() => {
-    cy.visit('/');
-  });
+
+    beforeEach(() => {
+      //cy.visit('https://www.saucedemo.com/'); 
+      cy.visit("/"); //because I added the base URL in cypress.config.js
+
+    });
+  
     it('Logins, adds 3 items, removes 1 and places the order', () => {
       cy.get('[id="user-name"]').type('standard_user'); 
       cy.get('[id="password"]').type('secret_sauce'); 
