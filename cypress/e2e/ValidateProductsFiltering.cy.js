@@ -30,5 +30,33 @@ describe('SauceDemo automation test', () => {
     });
 
     //start new filter method here.....
+    it('validate products filtering methods: sorting by Name (Z to A)', () => {
+      
+      cy.get('.product_sort_container').select('Name (A to Z)');
+      cy.get('.inventory_item_name').then(($items) => {   
+        const productNamesDefaultOrder = $items.map((index, element) => Cypress.$(element).text()).get();
+
+        // Store the default order in a Cypress alias so that it can be used below, outside of the .then() block
+        cy.wrap(productNamesDefaultOrder).as('defaultOrder');
+      });
+  
+
+      cy.get('.product_sort_container').select('Name (Z to A)'); 
+      cy.get('.inventory_item_name').then(($items) => {   
+        const productNamesZA = $items.map((index, element) => Cypress.$(element).text()).get(); 
+        
+        productNamesZA.forEach((currentItem, index) => {
+            cy.log(` Product at index  ${index}  has name:  ${currentItem}  `);
+        }); 
+
+        
+        // Retrieve the stored default order from the alias
+        cy.get('@defaultOrder').then((productNamesDefaultOrder) => {
+          const sortedProductsZA = productNamesDefaultOrder.reverse();
+          expect(productNamesZA).to.deep.equal(sortedProductsZA); 
+        });
+
+      });
+    });
   
 }); //end of describe
